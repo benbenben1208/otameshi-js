@@ -5,8 +5,6 @@ import { useAuth } from '../hooks/useAuth'
 
 // rfce÷
 function Home() {
-  const { user } = useAuth();
-
   return (
     <div>
       aaa

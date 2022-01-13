@@ -5,12 +5,13 @@ import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/userAuth/index";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
-export default function Auth() {
+
+export default function Login() {
   const context = useContext(AuthContext);
   const router = useRouter();
   const { user, login } = useAuth();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");;
+  const [password, setPassword] = useState("");
   if(user){
     router.push('/');
   }
@@ -36,7 +37,7 @@ export default function Auth() {
           alt="Workflow"
         />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-          Sign in to your account
+          ログイン
         </h2>
       </div>
       <form  className="mt-8 space-y-6" onSubmit={ (data) => loginSubmit(data) }>

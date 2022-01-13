@@ -3,25 +3,31 @@ import { useRouter } from "next/router";
 import { useState, useContext } from "react";
 import { AuthContext } from "../contexts/userAuth/index";
 import { useAuth } from "../hooks/useAuth";
-export default function Auth() {
+
+export default function Register() {
   const context = useContext(AuthContext);
   const router = useRouter();
-  const { user, login } = useAuth();
-  const [email, setEmail] = useState("");
+  const { user, register } = useAuth();
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-
-  const handleChange = (event) => {
-    if(event.target.name === 'email') {
-      setEmail(event.target.value);
-    } else if(event.target.name === 'password') {
-      setPassword(event.target.value);
-    }
+  const [email, setEmail] = useState("");
+  if (user) {
+    router.push("/");
   }
-  const  loginSubmit =  (event) => {
-      event.preventDefault();
-      const data = {email, password};
-      login(data);
+  const handleChange = (event) => {
+    if (event.target.name === "email") {
+      setEmail(event.target.value);
+    } else if (event.target.name === "password") {
+      setPassword(event.target.value);
+    } else if (event.target.name === "name") {
+        setName(event.target.value);
+    }
   };
+  const registerSubmit = (event) => {
+      event.preventDefault();
+      const data = { name, email, password};
+      register(data);
+  }
   return (
     <div className="max-w-md w-full space-y-8">
       <div>
@@ -32,11 +38,25 @@ export default function Auth() {
           alt="Workflow"
         />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-          Sign in to your account
+          アカウント登録
         </h2>
       </div>
-      <form  className="mt-8 space-y-6" onSubmit={ (data) => loginSubmit(data) }>
-
+      <form className="mt-8 space-y-6" onSubmit={ (e) => registerSubmit(e) }>
+        <div className="rounded-md shadow-sm -space-y-px">
+          <div>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autoComplete="name"
+              value={name}
+              onChange={handleChange}
+              required
+              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="お名前"
+            />
+          </div>
+        </div>
         <div className="rounded-md shadow-sm -space-y-px">
           <div>
             <input
@@ -48,7 +68,7 @@ export default function Auth() {
               onChange={handleChange}
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Email address"
+              placeholder="Eメール"
             />
           </div>
           <div>
@@ -61,7 +81,7 @@ export default function Auth() {
               autoComplete="current-password"
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Password"
+              placeholder="パスワード"
             />
           </div>
         </div>

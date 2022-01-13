@@ -43,8 +43,29 @@ export const AuthProvider = (props) => {
         });
     });
   };
+  const register = (data) => {
+    console.log(data);
+    const { name, email, password } = data;
+    console.log(name, email, password);
+    axios
+      .post("http://localhost/api/user/register", {
+        name,
+        email,
+        password,
+      }
+      )
+      .then((res) => {
+        console.log(res);
+        setUser(res.data.user);
+        alert("仮登録が完了しました。メールに添付されたリンクから本登録へと処理を実行してください。");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert('登録に失敗しました');
+      });
+  };
   return (
-    <AuthContext.Provider value={{ user, login }}>
+    <AuthContext.Provider value={{ user, login, register }}>
       {children}
     </AuthContext.Provider>
   );
