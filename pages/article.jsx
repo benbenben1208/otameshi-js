@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/userAuth/index";
 import { useAuth } from "../hooks/useAuth";
 import axios from "axios";
 
-export default function Chat() {
+export default function Article() {
   const context = useContext(AuthContext);
   const router = useRouter();
   const { user } = useAuth();
