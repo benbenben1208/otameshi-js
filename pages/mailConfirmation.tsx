@@ -1,6 +1,6 @@
 import Link from "next/link";
-
-const MailConfirmation = () => {
+import { NextPage } from "next";
+const MailConfirmation : NextPage = () => {
   return (
     <div className="bg-secondary">
       <div className="container mx-auto">

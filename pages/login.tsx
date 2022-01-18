@@ -1,34 +1,35 @@
 import { LockClosedIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
-import { useState, useContext } from "react";
+import { NextPage} from 'next'
+import { useState, useContext, ChangeEvent, FormEvent } from "react";
 import { AuthContext } from "../contexts/userAuth/index";
 import { useAuth } from "../hooks/useAuth";
 
-export default function Register() {
+ const Login: NextPage = () => {
   const context = useContext(AuthContext);
   const router = useRouter();
-  const { user, register } = useAuth();
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const { user, login } = useAuth();
   const [email, setEmail] = useState("");
-  if (user) {
-    router.push("/");
+  const [password, setPassword] = useState("");
+  if(user){
+    router.push('/');
   }
-  const handleChange = (event) => {
-    if (event.target.name === "email") {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if(event.target.name === 'email') {
       setEmail(event.target.value);
-    } else if (event.target.name === "password") {
+    } else if(event.target.name === 'password') {
       setPassword(event.target.value);
-    } else if (event.target.name === "name") {
-        setName(event.target.value);
     }
-  };
-  const registerSubmit = (event) => {
-      event.preventDefault();
-      const data = { name, email, password};
-      register(data);
   }
+  const  loginSubmit =  (event: FormEvent) => {
+    // console.log(event.target[0].value);
+    // console.log(event.target[1].value);
+      event.preventDefault();
+      const data = {email, password};
+      login(data);
+  };
   return (
+    <div className="flex flex-1 justify-center items-center w-screen flex-col">
     <div className="max-w-md w-full space-y-8">
       <div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -38,25 +39,11 @@ export default function Register() {
           alt="Workflow"
         />
         <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-          アカウント登録
+          ログイン
         </h2>
       </div>
-      <form className="mt-8 space-y-6" onSubmit={ (e) => registerSubmit(e) }>
-        <div className="rounded-md shadow-sm -space-y-px">
-          <div>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              autoComplete="name"
-              value={name}
-              onChange={handleChange}
-              required
-              className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="お名前"
-            />
-          </div>
-        </div>
+      <form  className="mt-8 space-y-6" onSubmit={ (e) => loginSubmit(e) }>
+
         <div className="rounded-md shadow-sm -space-y-px">
           <div>
             <input
@@ -68,7 +55,7 @@ export default function Register() {
               onChange={handleChange}
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="Eメール"
+              placeholder="Email address"
             />
           </div>
           <div>
@@ -81,18 +68,18 @@ export default function Register() {
               autoComplete="current-password"
               required
               className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-              placeholder="パスワード"
+              placeholder="Password"
             />
           </div>
         </div>
 
-        <div className="flex items-center justify-center">
+        {/* <div className="flex items-center justify-center">
           <div className="text-sm">
             <span className="cursor-pointer font-medium text-white hover:text-indigo-500">
               change mode?
             </span>
           </div>
-        </div>
+        </div> */}
 
         <div>
           <button
@@ -105,10 +92,12 @@ export default function Register() {
                 aria-hidden="true"
               />
             </span>
-            Sign in
+            ログイン
           </button>
         </div>
       </form>
     </div>
+    </div>
   );
 }
+export default Login;
