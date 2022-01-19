@@ -2,8 +2,11 @@ import React from "react";
 import { useState } from "react";
 import Link from "next/link";
 import { useAuth } from "../hooks/useAuth";
+type NavProps = {
+  color: string;
+}
+const   Navbar: React.FC<NavProps> = ({ color }) => {
 
-export default function Navbar({  }) {
   const [navbarOpen, setNavbarOpen] = useState(false);
   const { user, logout } = useAuth();
   return (
@@ -105,3 +108,4 @@ export default function Navbar({  }) {
     </>
   );
 }
+export default Navbar

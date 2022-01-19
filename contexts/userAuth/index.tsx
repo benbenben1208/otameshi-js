@@ -6,16 +6,7 @@ import {
 } from "react";
 import Router from "next/router";
 import axios, {AxiosResponse, AxiosRequestConfig, AxiosError} from "axios";
-
-type User = {
-  id: number;
-  name: string;
-  email: string;
-  email_verified_at: string;
-  created_at: string;
-  updated_at: string;
-  deleted_at: string | null;
-};
+import { User } from "../../interfaces/user";
 type ContextType = {
   user?: User;
   login: (props: loginProps) => void;
@@ -49,6 +40,7 @@ export const AuthProvider = (props: AuthProviderProps) => {
       .then(
         (res: AxiosResponse) => {
           console.log("ログイン済");
+          console.log(res.data);
           setUser(res.data);
         },
       )

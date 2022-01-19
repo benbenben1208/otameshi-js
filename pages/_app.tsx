@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import Pusher from "pusher-js";
 import { useEffect } from "react";
+import { AdminProvider } from "../contexts/adminAuth";
 
 axios.defaults.withCredentials = true;
 
@@ -51,9 +52,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   // pusher.trigger("message-sended-channel", "message-sended", { message: "hello world" });
   return (
     <AuthProvider>
+      <AdminProvider>
       <Layout >
         {pageLoading ? <div>Loading ...</div> : <Component {...pageProps} />}
       </Layout>
+      </AdminProvider>
     </AuthProvider>
   );
 }
